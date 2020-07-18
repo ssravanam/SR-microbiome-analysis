@@ -1,0 +1,9 @@
+#!/bin/bash
+
+#set -e
+#set -x 
+
+for f in $(ls /work/unobioinformatics/ssravanam/data/untrimmed_fastq/*.fastq.gz | sed 's/?_1.fastq.gz//' | cut -b 1-65 | sort -u); 
+do 
+java -jar /work/unobioinformatics/ssravanam/Trimmomatic-0.39/trimmomatic-0.39.jar  PE -phred33 ${f}_1.fastq.gz ${f}_2.fastq.gz ${f}_1_paired.fastq.gz ${f}_1_up.fastq.gz ${f}_2_paired.fastq.gz ${f}_2_up.fastq.gz ILLUMINACLIP:Trimmomatic-0.39/adapters/TruSeq3-PE.fa:2:30:10:2:keepBothReads HEADCROP:5 LEADING:3 TRAILING:3 MINLEN:36; 
+done
